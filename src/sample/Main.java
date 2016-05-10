@@ -20,7 +20,12 @@ public class Main extends Application {
     }
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
+        getStartView(primaryStage);
+    }
+
+    //start app view
+    private void getStartView(Stage primaryStage){
+        primaryStage.setTitle("Easy Game");
         Group root = new Group();
         Scene scene = new Scene(root, 600, 300, Color.BEIGE);
         primaryStage.setScene(scene);
@@ -38,19 +43,16 @@ public class Main extends Application {
         menuBar.setStyle("-fx-base:skyblue;-fx-border-width:4pt;-fx-border-color:navy;-fx-font:bold 16pt Georgia;");
         menuBar.setPrefSize(550, 50);
 
-        Menu menuF = new Menu("Новая игра");
-        MenuItem menuItemP = new MenuItem("Выберете сложность");
+        Menu menuF = new Menu("Игра");
+        MenuItem menuItemP = new MenuItem("Начать новую игру");
+        menuItemP.setStyle("-fx-text-fill:navy;-fx-font:bold italic 14pt Georgia;");
+        menuItemP.setAccelerator(KeyCombination.keyCombination("ENTER"));
+        menuItemP.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                getNewGame(primaryStage);
+            } });
+        menuF.getItems().addAll(menuItemP);
 
-        SeparatorMenuItem sep=new SeparatorMenuItem();
-        RadioMenuItem radioItemY = new RadioMenuItem("Легкий уровень");
-        radioItemY.setStyle("-fx-text-fill:navy;-fx-font:bold italic 12pt Georgia;");
-        ToggleGroup tgroup=new ToggleGroup();
-        radioItemY.setToggleGroup(tgroup);
-        radioItemY.setSelected(true);
-        RadioMenuItem radioItemN = new RadioMenuItem("Слоный уровень");
-        radioItemN.setStyle("-fx-text-fill:navy;-fx-font:bold italic 12pt Georgia;");
-        radioItemN.setToggleGroup(tgroup);
-        menuF.getItems().addAll(menuItemP, radioItemY, radioItemN);
 
         Menu menuE = new Menu("Результаты");
         MenuItem menuItemCut = new MenuItem("Топ-10");
@@ -73,5 +75,16 @@ public class Main extends Application {
 
         menuBar.getMenus().addAll(menuF, menuE, menuV);
         root.getChildren().add(menuBar);
+    }
+
+    //game view
+    private void getNewGame(Stage primaryStage){
+        primaryStage.setTitle("New Game");
+        Group root = new Group();
+        Scene scene = new Scene(root, 600, 300, Color.BEIGE);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+
     }
 }
